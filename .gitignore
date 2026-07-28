@@ -1,0 +1,5 @@
+node_module/
+.env
+coverage/
+dist/
+.DS_Store
