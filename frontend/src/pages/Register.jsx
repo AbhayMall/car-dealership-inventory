@@ -86,13 +86,13 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-gray-50">
+    <div className="min-h-[calc(100vh-80px)] bg-background">
 
       <div className="mx-auto grid min-h-[700px] max-w-7xl lg:grid-cols-2">
 
         {/* Left Side */}
 
-        <div className="hidden bg-gray-950 p-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="hidden bg-brand p-12 text-white lg:flex lg:flex-col lg:justify-between">
 
           <div>
 
@@ -101,7 +101,7 @@ const Register = () => {
               className="flex items-center gap-2"
             >
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
                 <Car size={22} />
               </div>
 
@@ -113,7 +113,7 @@ const Register = () => {
 
             <div className="mt-24">
 
-              <h1 className="text-4xl font-bold leading-tight">
+              <h1 className="text-4xl font-bold leading-tight text-white">
                 Start your journey
                 <br />
                 with AutoVault.
@@ -148,18 +148,18 @@ const Register = () => {
 
             <div className="mb-8">
 
-              <h2 className="text-3xl font-bold text-gray-900">
+                          <h2 className="text-3xl font-bold text-text-primary">
                 Create your account
               </h2>
 
-              <p className="mt-2 text-gray-600">
+                          <p className="mt-2 text-text-secondary">
                 Join AutoVault today.
               </p>
 
             </div>
 
             {error && (
-              <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                          <div className="mb-6 rounded-xl border border-error/20 bg-error/10 p-4 text-sm text-error">
                 {error}
               </div>
             )}
@@ -199,18 +199,17 @@ const Register = () => {
               />
 
               <Button
-                type="submit"
-                disabled={loading}
-                className="w-full"
-              >
-                {loading
-                  ? "Creating Account..."
-                  : "Create Account"}
-              </Button>
+                              type="submit"
+                              disabled={loading}
+                              loading={loading}
+                              className="w-full"
+                            >
+                              Create Account
+                            </Button>
 
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-600">
+            <p className="mt-6 text-center text-sm text-text-secondary">
 
               Already have an account?
 
