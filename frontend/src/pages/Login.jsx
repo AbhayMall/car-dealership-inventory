@@ -92,21 +92,21 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)] items-center justify-center bg-gray-50 px-4 py-12">
+    <div className="flex min-h-[calc(100vh-80px)] items-center justify-center bg-background px-4 py-12">
 
       <div className="w-full max-w-md">
 
-        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm sm:p-10">
+        <div className="rounded-3xl border border-border bg-surface p-8 shadow-sm sm:p-10">
 
           {/* Logo */}
 
           <div className="mb-8 text-center">
 
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-white">
               <Car size={28} />
             </div>
 
-            <h1 className="mt-5 text-3xl font-bold text-gray-900">
+            <h1 className="mt-5 text-3xl font-bold text-text-primary">
               Welcome back
             </h1>
 
@@ -119,7 +119,7 @@ const Login = () => {
           {/* Error */}
 
           {error && (
-            <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                      <div className="mb-6 rounded-xl border border-error/20 bg-error/10 p-4 text-sm text-error">
               {error}
             </div>
           )}
@@ -152,27 +152,22 @@ const Login = () => {
             />
 
             <Button
-              type="submit"
-              disabled={loading}
-              className="w-full"
-            >
-
-              {loading ? (
-                "Signing In..."
-              ) : (
-                <span className="flex items-center gap-2">
-                  <LogIn size={18} />
-                  Sign In
-                </span>
-              )}
-
-            </Button>
+                          type="submit"
+                          disabled={loading}
+                          loading={loading}
+                          className="w-full"
+                        >
+                          <span className="flex items-center gap-2">
+                            <LogIn size={18} />
+                            Sign In
+                          </span>
+                        </Button>
 
           </form>
 
           {/* Register */}
 
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-text-secondary">
 
             Don't have an account?
 
