@@ -286,11 +286,11 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       {/* Header */}
 
-      <section className="border-b border-gray-200 bg-white">
+      <section className="border-b border-border bg-surface">
 
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
 
@@ -298,15 +298,15 @@ const AdminDashboard = () => {
 
             <div>
 
-              <p className="font-semibold text-blue-600">
+              <p className="font-semibold text-primary">
                 ADMIN PANEL
               </p>
 
-              <h1 className="mt-2 text-3xl font-bold text-gray-900">
+              <h1 className="mt-2 text-3xl font-bold text-text-primary">
                 Inventory Dashboard
               </h1>
 
-              <p className="mt-2 text-gray-600">
+              <p className="mt-2 text-text-secondary">
                 Manage vehicles and monitor your dealership inventory.
               </p>
 
@@ -315,7 +315,7 @@ const AdminDashboard = () => {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={fetchVehicles}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
+                              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-5 py-3 font-semibold text-text-primary transition hover:bg-surface/50"
               >
                 <RefreshCw size={18} />
                 Refresh
@@ -323,7 +323,7 @@ const AdminDashboard = () => {
 
               <button
                 onClick={() => setShowAddModal(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700"
+                              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white transition hover:bg-primary-hover"
               >
                 <Plus size={18} />
                 Add Vehicle
@@ -408,7 +408,7 @@ const AdminDashboard = () => {
 
                   <div
                     key={item}
-                    className="h-96 animate-pulse rounded-2xl bg-gray-200"
+                            className="h-96 animate-pulse rounded-2xl bg-surface/50"
                   />
 
                 )
@@ -461,14 +461,14 @@ const AdminDashboard = () => {
 
             {/* Purchases */}
 
-            <div className="mt-10 rounded-2xl border border-gray-200 bg-white p-6">
+            <div className="mt-10 rounded-2xl border border-border bg-surface p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">Recent Purchases</h2>
-                  <p className="mt-1 text-sm text-gray-500">View and confirm purchase payments.</p>
+                              <h2 className="text-xl font-bold text-text-primary">Recent Purchases</h2>
+                              <p className="mt-1 text-sm text-text-secondary">View and confirm purchase payments.</p>
                 </div>
                 <div>
-                  <button onClick={fetchPurchases} className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold">Refresh</button>
+                              <button onClick={fetchPurchases} className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-2 text-sm font-semibold">Refresh</button>
                 </div>
               </div>
 
@@ -543,7 +543,7 @@ const StatCard = ({
 }) => {
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6">
+    <div className="rounded-2xl border border-border bg-surface p-6">
 
       <div className="flex items-center justify-between">
 
