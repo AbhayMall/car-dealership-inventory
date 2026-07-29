@@ -94,7 +94,7 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
 
       <section className="bg-brand px-4 py-16 text-white">
 
