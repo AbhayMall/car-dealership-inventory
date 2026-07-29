@@ -55,5 +55,17 @@ describe("POST /api/auth/register", ()=> {
     expect(response.body.message).toBe("User already exists");
 
 });
+it("should reject registration when name is missing", async () => {
+
+    const response = await request(app)
+        .post("/api/auth/register")
+        .send({
+            email: "noname@example.com",
+            password: "password123"
+        });
+
+    expect(response.statusCode).toBe(400);
+
+});
 
 });
