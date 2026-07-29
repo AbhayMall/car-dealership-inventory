@@ -88,10 +88,28 @@ const deleteVehicle = async (req, res) => {
 
     }
 };
+const searchVehicles = async (req, res) => {
+
+    try {
+
+        const vehicles =
+            await vehicleService.searchVehicles(req.query);
+
+        res.status(200).json(vehicles);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
 
 module.exports = {
     createVehicle,
     getVehicles,
     updateVehicle,
-    deleteVehicle
+    deleteVehicle,
+    searchVehicles
 };
