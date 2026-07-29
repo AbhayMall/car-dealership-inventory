@@ -66,11 +66,11 @@ const Inventory = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       {/* Header */}
 
-      <section className="border-b border-gray-200 bg-white">
+      <section className="border-b border-border bg-surface">
 
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 
@@ -78,15 +78,15 @@ const Inventory = () => {
 
             <div>
 
-              <p className="font-semibold text-blue-600">
+              <p className="font-semibold text-primary">
                 OUR INVENTORY
               </p>
 
-              <h1 className="mt-2 text-4xl font-bold text-gray-900">
+              <h1 className="mt-2 text-4xl font-bold text-text-primary">
                 Find your next vehicle
               </h1>
 
-              <p className="mt-3 max-w-2xl text-gray-600">
+              <p className="mt-3 max-w-2xl text-text-secondary">
                 Browse our available vehicles and find
                 the perfect match for your journey.
               </p>
@@ -95,7 +95,7 @@ const Inventory = () => {
 
             <Link
               to="/search"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+                          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white hover:bg-primary-hover"
             >
               <Search size={18} />
               Advanced Search
@@ -113,19 +113,19 @@ const Inventory = () => {
 
         {/* Search Bar */}
 
-        <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row">
+        <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:flex-row">
 
           <div className="relative flex-1">
 
             <Search
               size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                          className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary"
             />
 
             <input
               type="text"
               placeholder="Search vehicles..."
-              className="w-full rounded-xl border border-gray-200 py-3 pl-12 pr-4 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                          className="w-full rounded-xl border border-border py-3 pl-12 pr-4 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface text-text-primary"
             />
 
           </div>
@@ -156,7 +156,7 @@ const Inventory = () => {
               (item) => (
                 <div
                   key={item}
-                  className="h-96 animate-pulse rounded-2xl bg-gray-200"
+                          className="h-96 animate-pulse rounded-2xl bg-surface/50"
                 />
               )
             )}
@@ -170,18 +170,18 @@ const Inventory = () => {
           !error &&
           vehicles.length === 0 && (
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-16 text-center">
+                    <div className="rounded-2xl border border-border bg-surface p-16 text-center">
 
               <Car
                 size={48}
-                className="mx-auto text-gray-400"
+                        className="mx-auto text-text-secondary"
               />
 
-              <h2 className="mt-4 text-xl font-bold text-gray-900">
+                      <h2 className="mt-4 text-xl font-bold text-text-primary">
                 No vehicles available
               </h2>
 
-              <p className="mt-2 text-gray-500">
+                      <p className="mt-2 text-text-secondary">
                 Check back later for new inventory.
               </p>
 
