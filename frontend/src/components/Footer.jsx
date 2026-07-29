@@ -6,7 +6,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-200 bg-gray-950 text-gray-300">
+    <footer className="border-t border-border/40 bg-brand text-white">
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 
@@ -18,7 +18,7 @@ const Footer = () => {
 
             <div className="flex items-center gap-2">
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
                 <Car size={22} />
               </div>
 
@@ -28,7 +28,7 @@ const Footer = () => {
 
             </div>
 
-            <p className="mt-4 max-w-sm text-sm leading-6 text-gray-400">
+            <p className="mt-4 max-w-sm text-sm leading-6 text-white/80">
               A modern car dealership inventory platform
               for discovering, managing, and purchasing
               vehicles with ease.
@@ -97,7 +97,7 @@ const Footer = () => {
 
         </div>
 
-        <div className="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
+        <div className="mt-10 border-t border-border/30 pt-6 text-center text-sm text-white/70">
 
           © {new Date().getFullYear()} AutoVault.
           Built with React and Node.js.

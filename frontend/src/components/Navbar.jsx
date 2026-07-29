@@ -42,12 +42,12 @@ const Navbar = () => {
   const navLinkClass = ({ isActive }) =>
     `transition-colors ${
       isActive
-        ? "text-blue-600 font-semibold"
-        : "text-gray-600 hover:text-blue-600"
+          ? "text-primary font-semibold"
+          : "text-text-secondary hover:text-primary"
     }`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur">
 
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 
@@ -57,16 +57,16 @@ const Navbar = () => {
           to="/"
           className="flex items-center gap-2"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
             <Car size={22} />
           </div>
 
           <div>
-            <h1 className="text-lg font-bold text-gray-900">
+            <h1 className="text-lg font-bold text-text-primary">
               AutoVault
             </h1>
 
-            <p className="hidden text-xs text-gray-500 sm:block">
+            <p className="hidden text-xs text-text-secondary sm:block">
               Car Dealership
             </p>
           </div>
@@ -142,14 +142,14 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-text-primary hover:bg-surface/50"
               >
                 Login
               </Link>
 
               <Link
                 to="/register"
-                className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-hover"
               >
                 Get Started
               </Link>
@@ -157,18 +157,18 @@ const Navbar = () => {
           ) : (
             <>
               <div className="text-right">
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-semibold text-text-primary">
                   {user?.name}
                 </p>
 
-                <p className="text-xs capitalize text-gray-500">
+                <p className="text-xs capitalize text-text-secondary">
                   {user?.role}
                 </p>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-red-600"
+                className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-text-secondary hover:bg-surface/50 hover:text-red-600"
               >
                 <LogOut size={17} />
                 Logout
@@ -184,7 +184,7 @@ const Navbar = () => {
           onClick={() =>
             setIsMenuOpen(!isMenuOpen)
           }
-          className="rounded-lg p-2 text-gray-700 hover:bg-gray-100 md:hidden"
+          className="rounded-lg p-2 text-text-primary hover:bg-surface/50 md:hidden"
         >
           {isMenuOpen ? (
             <X size={24} />
@@ -198,7 +198,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
 
       {isMenuOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-4 md:hidden">
+        <div className="border-t border-border bg-surface px-4 py-4 md:hidden">
 
           <div className="flex flex-col gap-4">
 
@@ -266,7 +266,7 @@ const Navbar = () => {
                   onClick={() =>
                     setIsMenuOpen(false)
                   }
-                  className="rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:bg-gray-100"
+                  className="rounded-lg px-4 py-2 text-center font-medium text-text-primary hover:bg-surface/50"
                 >
                   Login
                 </Link>
@@ -276,7 +276,7 @@ const Navbar = () => {
                   onClick={() =>
                     setIsMenuOpen(false)
                   }
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-center font-semibold text-white"
+                  className="rounded-lg bg-primary px-4 py-2 text-center font-semibold text-white"
                 >
                   Get Started
                 </Link>
