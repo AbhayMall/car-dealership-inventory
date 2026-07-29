@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import Button from "./Button";
 
 const ConfirmModal = ({
   title,
@@ -9,34 +10,37 @@ const ConfirmModal = ({
 }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-lg rounded-3xl bg-white shadow-2xl">
-        <div className="flex items-start justify-between border-b border-gray-200 p-6">
+      <div className="w-full max-w-lg rounded-3xl bg-surface shadow-2xl">
+        <div className="flex items-start justify-between border-b border-border p-6">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">{title}</h2>
-            <p className="mt-2 text-sm text-gray-500">{message}</p>
+            <h2 className="text-xl font-bold text-text-primary">{title}</h2>
+            <p className="mt-2 text-sm text-text-secondary">{message}</p>
           </div>
           <button
             onClick={onCancel}
-            className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100"
+            className="rounded-full p-2 text-text-secondary transition hover:bg-surface/50"
+            aria-label="Close"
           >
             <X size={20} />
           </button>
         </div>
 
         <div className="flex flex-col gap-4 p-6 sm:flex-row sm:justify-end">
-          <button
+          <Button
             onClick={onCancel}
-            className="rounded-2xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            variant="secondary"
+            className="rounded-2xl px-5 py-3 text-sm font-semibold"
           >
             Cancel
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={onConfirm}
-            className="rounded-2xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+            variant="danger"
+            className="rounded-2xl px-5 py-3 text-sm font-semibold"
           >
             {confirmLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
