@@ -45,7 +45,7 @@ const Profile = () => {
     <div className="mx-auto max-w-4xl p-6">
       <h1 className="text-2xl font-bold">Profile</h1>
 
-      <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="mt-6 rounded-2xl border border-border bg-surface p-6">
         <h2 className="text-lg font-semibold">Account</h2>
         <p className="mt-2">Name: {user?.name}</p>
         <p>Email: {user?.email}</p>
@@ -56,16 +56,16 @@ const Profile = () => {
         <h2 className="text-lg font-semibold">My Purchases</h2>
 
         {loading && <div className="p-4">Loading...</div>}
-        {error && <div className="p-4 text-red-600">{error}</div>}
+              {error && <div className="p-4 text-error">{error}</div>}
 
         {!loading && purchases.length === 0 && (
-          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-6">You have no purchases yet.</div>
+                <div className="mt-4 rounded-xl border border-border bg-surface p-6">You have no purchases yet.</div>
         )}
 
         {!loading && purchases.length > 0 && (
-          <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+                <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface">
             <table className="w-full table-auto">
-              <thead className="bg-gray-50 text-left text-sm font-medium text-gray-600">
+                    <thead className="bg-surface/50 text-left text-sm font-medium text-text-secondary">
                 <tr>
                   <th className="px-4 py-3">Receipt</th>
                   <th className="px-4 py-3">Vehicle</th>
@@ -74,7 +74,7 @@ const Profile = () => {
                   <th className="px-4 py-3">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-sm text-gray-700">
+                    <tbody className="text-sm text-text-primary">
                 {purchases.map((p) => (
                   <tr key={p._id} className="border-t">
                     <td className="px-4 py-3">{p._id.slice(-6)}</td>
