@@ -111,7 +111,7 @@ const Login = () => {
             </h1>
 
             <p className="mt-2 text-gray-600">
-              Sign in to continue to AutoVault.
+              Sign in to continue to CarNova.
             </p>
 
           </div>

@@ -63,7 +63,7 @@ const Navbar = () => {
 
           <div>
             <h1 style={{ fontFamily: "Poppins, sans-serif" }} className="text-xl font-bold text-black">
-              AutoVault
+              CarNova
             </h1>
 
             <p className="hidden text-xs text-gray-500 sm:block">

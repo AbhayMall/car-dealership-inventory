@@ -46,7 +46,7 @@ const Dashboard = () => {
       <section className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <p className="mt-4 max-w-3xl text-gray-600">
-          Welcome to AutoVault, your trusted car dealership inventory manager.
+          Welcome to CarNova, your trusted car dealership inventory manager.
           Here you can view your profile, check recent purchases, and manage
           your next vehicle decision with confidence.
         </p>
@@ -64,9 +64,9 @@ const Dashboard = () => {
         <>
           <section className="grid gap-6 lg:grid-cols-3">
             <div className="rounded-3xl border border-gray-200 bg-white p-6">
-              <h2 className="text-xl font-semibold text-gray-900">About AutoVault</h2>
+              <h2 className="text-xl font-semibold text-gray-900">About CarNova</h2>
               <p className="mt-3 text-gray-600">
-                AutoVault helps you browse dealership inventory, track your
+                CarNova helps you browse dealership inventory, track your
                 purchases, and manage your account from one clean dashboard.
               </p>
             </div>

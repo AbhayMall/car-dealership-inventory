@@ -106,7 +106,7 @@ const Register = () => {
               </div>
 
               <span className="text-xl font-bold">
-                AutoVault
+                CarNova
               </span>
 
             </Link>
@@ -116,7 +116,7 @@ const Register = () => {
               <h1 className="text-4xl font-bold leading-tight">
                 Start your journey
                 <br />
-                with AutoVault.
+                with CarNova.
               </h1>
 
               <p className="mt-6 max-w-md leading-7 text-gray-400">
@@ -153,7 +153,7 @@ const Register = () => {
               </h2>
 
               <p className="mt-2 text-gray-600">
-                Join AutoVault today.
+                Join CarNova today.
               </p>
 
             </div>
