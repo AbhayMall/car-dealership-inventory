@@ -1,6 +1,7 @@
 import {
   Link,
 } from "react-router-dom";
+import Button from "../components/Button";
 
 import {
   ArrowRight,
@@ -13,11 +14,11 @@ import {
 
 const Home = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-background">
 
       {/* Hero Section */}
 
-      <section className="relative overflow-hidden bg-gray-950">
+      <section className="relative overflow-hidden bg-brand">
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.25),transparent_40%)]" />
 
@@ -56,7 +57,7 @@ const Home = () => {
 
               <Link
                 to="/inventory"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white transition hover:bg-blue-700"
+                              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-semibold text-white transition hover:bg-primary-hover"
               >
                 Explore Inventory
 
@@ -66,7 +67,7 @@ const Home = () => {
 
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center rounded-xl border border-gray-700 px-6 py-3.5 font-semibold text-white transition hover:bg-gray-900"
+                              className="inline-flex items-center justify-center rounded-xl border border-border px-6 py-3.5 font-semibold text-text-primary transition hover:bg-surface/50"
               >
                 Create Account
               </Link>
@@ -131,11 +132,11 @@ const Home = () => {
 
           <div className="mx-auto max-w-2xl text-center">
 
-            <p className="font-semibold text-blue-600">
+            <p className="font-semibold text-primary">
               WHY AUTOVAULT
             </p>
 
-            <h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold text-text-primary sm:text-4xl">
               Everything you need to find your next car
             </h2>
 
@@ -214,17 +215,17 @@ const FeatureCard = ({
   description,
 }) => {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-8 transition hover:-translate-y-1 hover:shadow-xl">
+    <div className="rounded-2xl border border-border bg-surface p-8 transition hover:-translate-y-1 hover:shadow-card-hover">
 
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
         {icon}
       </div>
 
-      <h3 className="mt-6 text-xl font-bold text-gray-900">
+      <h3 className="mt-6 text-xl font-bold text-text-primary">
         {title}
       </h3>
 
-      <p className="mt-3 leading-7 text-gray-600">
+      <p className="mt-3 leading-7 text-text-secondary">
         {description}
       </p>
 
