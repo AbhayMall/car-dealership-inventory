@@ -1,17 +1,24 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
+const { MongoMemoryServer } = require("mongodb-memory-server");
 require("dotenv").config();
 const app = require("../app");
 
 describe("POST /api/auth/register", ()=> {
+    let mongoServer;
+
     beforeAll(async () => {
-        const dbUri = process.env.MONGO_TEST_URI;
-        await mongoose.connect(dbUri);
+        mongoServer = await MongoMemoryServer.create();
+        const uri = mongoServer.getUri();
+        await mongoose.connect(uri);
     });
 
     afterAll(async () => {
-        await mongoose.connection.db.dropDatabase();
+        if (mongoose.connection.db) {
+            await mongoose.connection.db.dropDatabase();
+        }
         await mongoose.disconnect();
+        if (mongoServer) await mongoServer.stop();
     });
 
     it("should register a new user", async ()=>{
@@ -24,5 +31,29 @@ describe("POST /api/auth/register", ()=> {
             });
         expect(res.statusCode).toBe(201);
     });
+
+    it("should reject duplicate email", async () => {
+
+    await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Abhay",
+            email: "duplicate@example.com",
+            password: "password123"
+        });
+
+    const response = await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Another User",
+            email: "duplicate@example.com",
+            password: "password456"
+        });
+
+    expect(response.statusCode).toBe(400);
+
+    expect(response.body.message).toBe("User already exists");
+
+});
 
 });
