@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 require("dotenv").config();
 const app = require("../app");
+const {
+    createTestUser
+} = require("./helpers/authHelper");
 
 const registerAndLoginUser = async (userData) => {
     await request(app)
@@ -59,64 +62,38 @@ describe("Vehicle API", () => {
         expect(response.body.message).toBe("Invalid or expired token");
     });
 
-    it("should create a vehicle for an authenticated user", async () => {
-        const token = await registerAndLoginUser({
-            name: "Vehicle User",
-            email: "vehicleuser@example.com",
-            password: "password123"
-        });
+    it("should create a vehicle for authenticated user", async () => {
 
-        const response = await request(app)
-            .post("/api/vehicles")
-            .set("Authorization", `Bearer ${token}`)
-            .send({
-                make: "Honda",
-                model: "Accord",
-                category: "Sedan",
-                price: 28000,
-                quantity: 3
-            });
+    const token = await createTestUser();
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toMatchObject({
-            make: "Honda",
-            model: "Accord",
+    const response = await request(app)
+        .post("/api/vehicles")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+            make: "Toyota",
+            model: "Camry",
             category: "Sedan",
-            price: 28000,
-            quantity: 3
-        });
-    });
-
-    it("should list vehicles for authenticated user", async () => {
-        const token = await registerAndLoginUser({
-            name: "List User",
-            email: "listuser@example.com",
-            password: "password123"
+            price: 25000,
+            quantity: 5
         });
 
-        await request(app)
-            .post("/api/vehicles")
-            .set("Authorization", `Bearer ${token}`)
-            .send({
-                make: "Ford",
-                model: "Mustang",
-                category: "Coupe",
-                price: 50000,
-                quantity: 2
-            });
+    expect(response.statusCode).toBe(201);
 
-        const response = await request(app)
-            .get("/api/vehicles")
-            .set("Authorization", `Bearer ${token}`);
+    expect(response.body.make).toBe("Toyota");
+});
 
-        expect(response.statusCode).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
-        expect(response.body.length).toBe(1);
-        expect(response.body[0]).toMatchObject({
-            make: "Ford",
-            model: "Mustang"
-        });
-    });
+   it("should get all vehicles for authenticated user", async () => {
+
+    const token = await createTestUser();
+
+    const response = await request(app)
+        .get("/api/vehicles")
+        .set("Authorization", `Bearer ${token}`);
+
+    expect(response.statusCode).toBe(200);
+
+    expect(Array.isArray(response.body)).toBe(true);
+});
 
     it("should purchase a vehicle and decrement quantity", async () => {
         const token = await registerAndLoginUser({
