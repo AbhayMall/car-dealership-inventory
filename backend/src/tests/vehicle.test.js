@@ -176,4 +176,17 @@ describe("Vehicle API", () => {
         expect(response.statusCode).toBe(403);
         expect(response.body.message).toBe("Admin access required");
     });
+    it("should reject vehicle creation without authentication", async () => {
+    const response = await request(app)
+        .post("/api/vehicles")
+        .send({
+            make: "Toyota",
+            model: "Camry",
+            category: "Sedan",
+            price: 25000,
+            quantity: 5
+        });
+
+    expect(response.statusCode).toBe(401);
+});
 });
