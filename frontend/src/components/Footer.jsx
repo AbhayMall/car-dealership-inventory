@@ -1,6 +1,6 @@
 import {
   Car,
-  Github,
+  GitFork,
   Mail,
 } from "lucide-react";
 
@@ -87,7 +87,7 @@ const Footer = () => {
               </p>
 
               <p className="flex items-center gap-2">
-                <Github size={16} />
+                <GitFork size={16} />
                 GitHub Project
               </p>
 
