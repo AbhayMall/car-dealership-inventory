@@ -65,12 +65,12 @@ const AdminPurchaseDetail = () => {
     <div className="mx-auto max-w-4xl p-6">
       <h1 className="text-2xl font-bold">Purchase Details</h1>
 
-      <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="mt-6 rounded-2xl border border-border bg-surface p-6">
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <h3 className="text-sm font-medium text-gray-500">Buyer</h3>
+            <h3 className="text-sm font-medium text-text-secondary">Buyer</h3>
             <p className="mt-2 font-semibold">{purchase.buyerName || purchase.user?.name || '-'}</p>
-            <p className="text-sm text-gray-600">Phone: {purchase.phone || '-'}</p>
+            <p className="text-sm text-text-secondary">Phone: {purchase.phone || '-'}</p>
             <p className="text-sm text-gray-600">Aadhar: {purchase.aadhar || '-'}</p>
             <p className="text-sm text-gray-600">Location: {purchase.location || '-'}</p>
             <p className="text-sm text-gray-600">Age: {purchase.age || '-'}</p>
@@ -78,10 +78,10 @@ const AdminPurchaseDetail = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500">Vehicle</h3>
+            <h3 className="text-sm font-medium text-text-secondary">Vehicle</h3>
             <p className="mt-2 font-semibold">{purchase.vehicle?.make} {purchase.vehicle?.model}</p>
-            <p className="text-sm text-gray-600">Category: {purchase.vehicle?.category}</p>
-            <p className="text-sm text-gray-600">Price: £{purchase.vehicle?.price}</p>
+            <p className="text-sm text-text-secondary">Category: {purchase.vehicle?.category}</p>
+            <p className="text-sm text-text-secondary">Price: £{purchase.vehicle?.price}</p>
             <p className="text-sm text-gray-600">Purchased: {new Date(purchase.createdAt).toLocaleString()}</p>
             <p className="text-sm text-gray-600">Payment: {purchase.paymentMethod} / {purchase.paymentConfirmed ? 'Confirmed' : 'Pending'}</p>
           </div>
@@ -90,7 +90,7 @@ const AdminPurchaseDetail = () => {
         <div className="mt-6 flex gap-3">
           <Button onClick={handleDownload}>Download Receipt</Button>
           {!purchase.paymentConfirmed && (
-            <Button onClick={handleConfirm} disabled={confirming}>{confirming ? 'Confirming...' : 'Confirm Payment'}</Button>
+                    <Button onClick={handleConfirm} loading={confirming} disabled={confirming}>Confirm Payment</Button>
           )}
         </div>
       </div>
