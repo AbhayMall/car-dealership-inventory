@@ -1,22 +1,126 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Inventory from "./pages/Inventory";
+import Search from "./pages/Search";
+import VehicleDetails from "./pages/VehicleDetails";
+import AdminDashboard from "./pages/AdminDashboard";
+import AddVehicle from "./pages/AddVehicle";
+import EditVehicle from "./pages/EditVehicle";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-10 rounded-2xl shadow-lg">
-        <h1 className="text-4xl font-bold text-gray-900">
-          Car Dealership
-        </h1>
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col">
 
-        <p className="mt-4 text-gray-600">
-          Tailwind CSS is working!
-        </p>
+        <Navbar />
+
+        <main className="flex-1">
+          <Routes>
+
+            {/* Public Routes */}
+            <Route
+              path="/"
+              element={<Home />}
+            />
+
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+
+            <Route
+              path="/register"
+              element={<Register />}
+            />
+
+            {/* Protected Routes */}
+
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/inventory"
+              element={
+                <ProtectedRoute>
+                  <Inventory />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/search"
+              element={
+                <ProtectedRoute>
+                  <Search />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/vehicles/:id"
+              element={
+                <ProtectedRoute>
+                  <VehicleDetails />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin Routes */}
+
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/admin/vehicles/new"
+              element={
+                <AdminRoute>
+                  <AddVehicle />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/admin/vehicles/:id/edit"
+              element={
+                <AdminRoute>
+                  <EditVehicle />
+                </AdminRoute>
+              }
+            />
+
+          </Routes>
+        </main>
+
+        <Footer />
+
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

@@ -4,9 +4,11 @@ const jwt = require("jsonwebtoken");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 require("dotenv").config();
 const app = require("../app");
+
 const {
-    createTestUser
-} = require("./helpers/authHelper");
+    createTestUser,
+    createAdmin
+} = require("./helpers/authHelper");;
 
 const registerAndLoginUser = async (userData) => {
     await request(app)
@@ -165,5 +167,88 @@ describe("Vehicle API", () => {
         });
 
     expect(response.statusCode).toBe(401);
+});
+it("should search vehicles by make", async () => {
+
+    const token = await createTestUser();
+
+    await request(app)
+        .post("/api/vehicles")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+            make: "Honda",
+            model: "Civic",
+            category: "Sedan",
+            price: 22000,
+            quantity: 3
+        });
+
+    const response = await request(app)
+        .get("/api/vehicles/search?make=Honda")
+        .set("Authorization", `Bearer ${token}`);
+
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body.length).toBeGreaterThan(0);
+
+    expect(response.body[0].make).toBe("Honda");
+});
+it("should allow admin to delete a vehicle", async () => {
+
+    const userToken = await createTestUser();
+
+    const adminToken = await createAdmin();
+
+    const vehicleResponse = await request(app)
+        .post("/api/vehicles")
+        .set("Authorization", `Bearer ${userToken}`)
+        .send({
+            make: "Ford",
+            model: "Mustang",
+            category: "Sports",
+            price: 45000,
+            quantity: 2
+        });
+
+    expect(vehicleResponse.statusCode).toBe(201);
+
+    const vehicleId = vehicleResponse.body._id;
+
+    const deleteResponse = await request(app)
+        .delete(`/api/vehicles/${vehicleId}`)
+        .set(
+            "Authorization",
+            `Bearer ${adminToken}`
+        );
+
+    expect(deleteResponse.statusCode).toBe(200);
+});
+it("should reject vehicle deletion by normal user", async () => {
+
+    const userToken = await createTestUser();
+
+    const vehicleResponse = await request(app)
+        .post("/api/vehicles")
+        .set("Authorization", `Bearer ${userToken}`)
+        .send({
+            make: "Ford",
+            model: "Focus",
+            category: "Hatchback",
+            price: 20000,
+            quantity: 2
+        });
+
+    expect(vehicleResponse.statusCode).toBe(201);
+
+    const vehicleId = vehicleResponse.body._id;
+
+    const response = await request(app)
+        .delete(`/api/vehicles/${vehicleId}`)
+        .set(
+            "Authorization",
+            `Bearer ${userToken}`
+        );
+
+    expect(response.statusCode).toBe(403);
 });
 });
