@@ -117,4 +117,26 @@ it("should reject invalid email format", async () => {
     expect(response.statusCode).toBe(400);
 
 });
+it("should login an existing user", async () => {
+
+    await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Login User",
+            email: "login@example.com",
+            password: "password123"
+        });
+
+    const response = await request(app)
+        .post("/api/auth/login")
+        .send({
+            email: "login@example.com",
+            password: "password123"
+        });
+
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body).toHaveProperty("token");
+
+});
 });
