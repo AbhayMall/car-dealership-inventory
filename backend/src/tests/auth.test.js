@@ -91,4 +91,17 @@ it("should reject registration when password is missing", async () => {
     expect(response.statusCode).toBe(400);
 
 });
+it("should reject password shorter than 8 characters", async () => {
+
+    const response = await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Abhay",
+            email: "shortpassword@example.com",
+            password: "123"
+        });
+
+    expect(response.statusCode).toBe(400);
+
+});
 });
