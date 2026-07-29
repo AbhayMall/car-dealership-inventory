@@ -105,7 +105,7 @@ const AdminVehicleTable = ({
 
                   <td className="px-6 py-5 font-medium text-gray-900">
 
-                    £{Number(vehicle.price).toLocaleString("en-GB")}
+                    Rs.{Number(vehicle.price).toLocaleString("en-GB")}
 
                   </td>
 

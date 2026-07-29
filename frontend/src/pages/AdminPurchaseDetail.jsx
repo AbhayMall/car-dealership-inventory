@@ -81,7 +81,7 @@ const AdminPurchaseDetail = () => {
             <h3 className="text-sm font-medium text-gray-500">Vehicle</h3>
             <p className="mt-2 font-semibold">{purchase.vehicle?.make} {purchase.vehicle?.model}</p>
             <p className="text-sm text-gray-600">Category: {purchase.vehicle?.category}</p>
-            <p className="text-sm text-gray-600">Price: £{purchase.vehicle?.price}</p>
+            <p className="text-sm text-gray-600">Price: Rs.{purchase.vehicle?.price}</p>
             <p className="text-sm text-gray-600">Purchased: {new Date(purchase.createdAt).toLocaleString()}</p>
             <p className="text-sm text-gray-600">Payment: {purchase.paymentMethod} / {purchase.paymentConfirmed ? 'Confirmed' : 'Pending'}</p>
           </div>

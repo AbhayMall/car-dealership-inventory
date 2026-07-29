@@ -83,7 +83,7 @@ const Footer = () => {
 
               <p className="flex items-center gap-2">
                 <Mail size={16} />
-                support@autovault.com
+                abhaymall9305@gmail.com
               </p>
 
               <p className="flex items-center gap-2">
@@ -100,7 +100,7 @@ const Footer = () => {
         <div className="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
 
           © {new Date().getFullYear()} AutoVault.
-          Built with React and Node.js.
+          
 
         </div>
 

@@ -4,6 +4,7 @@ const cors  = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const vehicleRoutes = require("./routes/vehicleRoutes");
 const purchaseRoutes = require("./routes/purchaseRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express();
 

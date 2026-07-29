@@ -104,7 +104,7 @@ const VehicleCard = ({
             </p>
 
             <p className="text-xl font-bold text-gray-900">
-              £{Number(price).toLocaleString("en-GB")}
+              Rs.{Number(price).toLocaleString("en-GB")}
             </p>
 
           </div>

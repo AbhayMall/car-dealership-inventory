@@ -93,27 +93,6 @@ const Home = () => {
 
               </div>
 
-              <div className="absolute -bottom-4 -left-4 rounded-2xl border border-gray-800 bg-gray-900 p-5 shadow-xl">
-
-                <div className="flex items-center gap-3">
-
-                  <div className="rounded-xl bg-green-500/10 p-3 text-green-500">
-                    <ShieldCheck size={22} />
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-semibold text-white">
-                      Trusted Inventory
-                    </p>
-
-                    <p className="text-xs text-gray-500">
-                      Quality vehicles
-                    </p>
-                  </div>
-
-                </div>
-
-              </div>
 
             </div>
 

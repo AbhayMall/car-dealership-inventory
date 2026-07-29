@@ -88,7 +88,7 @@ const getReceipt = async (req, res) => {
     doc.moveDown();
     doc.text(`Vehicle: ${purchase.vehicle?.make || ""} ${purchase.vehicle?.model || ""}`);
     doc.text(`Category: ${purchase.vehicle?.category || ""}`);
-    doc.text(`Price: £${purchase.vehicle?.price || ""}`);
+    doc.text(`Price: Rs.${purchase.vehicle?.price || ""}`);
 
     doc.end();
     doc.pipe(res);

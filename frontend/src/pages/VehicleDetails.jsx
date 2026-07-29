@@ -204,7 +204,7 @@ const VehicleDetails = () => {
             </h1>
 
             <p className="mt-6 text-3xl font-bold text-gray-900">
-              £{Number(vehicle.price).toLocaleString("en-GB")}
+              Rs.{Number(vehicle.price).toLocaleString("en-GB")}
             </p>
 
             <div className="my-8 h-px bg-gray-200" />

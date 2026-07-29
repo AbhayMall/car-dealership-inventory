@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
 
           <div>
-            <h1 className="text-lg font-bold text-gray-900">
+            <h1 style={{ fontFamily: "Poppins, sans-serif" }} className="text-xl font-bold text-black">
               AutoVault
             </h1>
 
@@ -198,7 +198,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
 
       {isMenuOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-4 md:hidden">
+        <div className="border-t border-gray-200 bg-white px-6 py-6 md:hidden">
 
           <div className="flex flex-col gap-4">
 
