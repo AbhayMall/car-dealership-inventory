@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import Button from "./Button";
+import Input from "./Input";
 
 const PurchaseModal = ({ vehicle, onClose, onPurchased }) => {
   const [form, setForm] = useState({
@@ -49,32 +50,32 @@ const PurchaseModal = ({ vehicle, onClose, onPurchased }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-gray-200 p-6">
+      <div className="w-full max-w-lg rounded-2xl bg-surface shadow-2xl">
+        <div className="flex items-center justify-between border-b border-border p-6">
           <div>
-            <h2 className="text-xl font-bold">Purchase Vehicle</h2>
-            <p className="mt-1 text-sm text-gray-500">Provide buyer details to complete purchase.</p>
+            <h2 className="text-xl font-bold text-text-primary">Purchase Vehicle</h2>
+            <p className="mt-1 text-sm text-text-secondary">Provide buyer details to complete purchase.</p>
           </div>
-          <button onClick={onClose} className="rounded-lg p-2 text-gray-500 hover:bg-gray-100">
+          <button onClick={onClose} className="rounded-lg p-2 text-text-secondary hover:bg-surface/50" aria-label="Close">
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 p-6">
-          {error && <div className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+          {error && <div className="rounded-xl bg-error/10 p-3 text-sm text-error">{error}</div>}
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <input name="buyerName" value={form.buyerName} onChange={handleChange} placeholder="Full name" className="rounded-xl border p-3" />
-            <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone number" className="rounded-xl border p-3" />
-            <input name="aadhar" value={form.aadhar} onChange={handleChange} placeholder="Aadhar number" className="rounded-xl border p-3" />
-            <input name="location" value={form.location} onChange={handleChange} placeholder="Location" className="rounded-xl border p-3" />
-            <input name="age" type="number" value={form.age} onChange={handleChange} placeholder="Age" className="rounded-xl border p-3" />
-            <input name="drivingLicense" value={form.drivingLicense} onChange={handleChange} placeholder="Driving license number" className="rounded-xl border p-3" />
+            <Input name="buyerName" label="Full name" value={form.buyerName} onChange={handleChange} />
+            <Input name="phone" label="Phone number" value={form.phone} onChange={handleChange} />
+            <Input name="aadhar" label="Aadhar number" value={form.aadhar} onChange={handleChange} />
+            <Input name="location" label="Location" value={form.location} onChange={handleChange} />
+            <Input name="age" label="Age" type="number" value={form.age} onChange={handleChange} />
+            <Input name="drivingLicense" label="Driving license number" value={form.drivingLicense} onChange={handleChange} />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">Payment Method</label>
-            <select name="paymentMethod" value={form.paymentMethod} onChange={handleChange} className="w-full rounded-xl border p-3">
+            <label className="mb-2 block text-sm font-medium text-text-primary">Payment Method</label>
+            <select name="paymentMethod" value={form.paymentMethod} onChange={handleChange} className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-text-primary">
               <option value="cash">Cash (pay on delivery)</option>
               <option value="card">Card</option>
               <option value="paypal">PayPal</option>
@@ -82,8 +83,8 @@ const PurchaseModal = ({ vehicle, onClose, onPurchased }) => {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="flex-1 rounded-xl border border-gray-200 px-5 py-3">Cancel</button>
-            <Button type="submit" className="flex-1" disabled={loading}>{loading? 'Processing...':'Confirm Purchase'}</Button>
+            <Button type="button" variant="secondary" onClick={onClose} className="flex-1">Cancel</Button>
+            <Button type="submit" className="flex-1" disabled={loading} loading={loading}>Confirm Purchase</Button>
           </div>
         </form>
       </div>
