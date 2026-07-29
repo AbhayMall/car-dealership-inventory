@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 
 import VehicleCard from "../components/VehicleCard";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 import api from "../services/api";
 
@@ -94,7 +96,7 @@ const Search = () => {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      <section className="bg-gray-950 px-4 py-16 text-white">
+      <section className="bg-brand px-4 py-16 text-white">
 
         <div className="mx-auto max-w-4xl text-center">
 
@@ -120,7 +122,7 @@ const Search = () => {
 
         <form
           onSubmit={handleSearch}
-          className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
         >
 
           <div className="mb-6 flex items-center gap-3">
@@ -138,63 +140,22 @@ const Search = () => {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
 
-            <input
-              name="make"
-              value={filters.make}
-              onChange={handleChange}
-              placeholder="Make"
-              className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
+                      <Input name="make" value={filters.make} onChange={handleChange} placeholder="Make" />
 
-            <input
-              name="model"
-              value={filters.model}
-              onChange={handleChange}
-              placeholder="Model"
-              className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
+                      <Input name="model" value={filters.model} onChange={handleChange} placeholder="Model" />
 
-            <input
-              name="category"
-              value={filters.category}
-              onChange={handleChange}
-              placeholder="Category"
-              className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
+                      <Input name="category" value={filters.category} onChange={handleChange} placeholder="Category" />
 
-            <input
-              name="minPrice"
-              value={filters.minPrice}
-              onChange={handleChange}
-              type="number"
-              placeholder="Min Price"
-              className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
+                      <Input name="minPrice" value={filters.minPrice} onChange={handleChange} type="number" placeholder="Min Price" />
 
-            <input
-              name="maxPrice"
-              value={filters.maxPrice}
-              onChange={handleChange}
-              type="number"
-              placeholder="Max Price"
-              className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
+                      <Input name="maxPrice" value={filters.maxPrice} onChange={handleChange} type="number" placeholder="Max Price" />
 
-          </div>
+                    </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
-          >
-
-            <SearchIcon size={18} />
-
-            {loading
-              ? "Searching..."
-              : "Search Vehicles"}
-
-          </button>
+          <Button type="submit" loading={loading} className="mt-6 w-full inline-flex items-center justify-center gap-2">
+                      <SearchIcon size={18} />
+                      Search Vehicles
+                    </Button>
 
         </form>
 
