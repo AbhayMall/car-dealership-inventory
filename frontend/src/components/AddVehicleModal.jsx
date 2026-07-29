@@ -83,19 +83,19 @@ const AddVehicleModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
 
-      <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl">
+      <div className="w-full max-w-lg rounded-2xl bg-surface shadow-2xl">
 
         {/* Header */}
 
-        <div className="flex items-center justify-between border-b border-gray-200 p-6">
+        <div className="flex items-center justify-between border-b border-border p-6">
 
           <div>
 
-            <h2 className="text-xl font-bold text-gray-900">
+            <h2 className="text-xl font-bold text-text-primary">
               Add New Vehicle
             </h2>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-text-secondary">
               Add a vehicle to your inventory.
             </p>
 
@@ -103,10 +103,11 @@ const AddVehicleModal = ({
 
           <button
             onClick={onClose}
-            className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
-          >
-            <X size={20} />
-          </button>
+                      className="rounded-lg p-2 text-text-secondary hover:bg-surface/50"
+                      aria-label="Close"
+                    >
+                      <X size={20} />
+                    </button>
 
         </div>
 
@@ -119,7 +120,7 @@ const AddVehicleModal = ({
 
           {error && (
 
-            <div className="rounded-xl bg-red-50 p-4 text-sm text-red-700">
+                      <div className="rounded-xl bg-error/10 p-4 text-sm text-error">
               {error}
             </div>
 
@@ -185,31 +186,32 @@ const AddVehicleModal = ({
               value={formData.imageUrls}
               onChange={handleChange}
               placeholder="Enter image URLs separated by commas"
-              className="min-h-[120px] w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none focus:border-blue-500"
-            />
-            <p className="mt-2 text-sm text-gray-500">
+                          className="min-h-[120px] w-full rounded-xl border border-border bg-transparent px-4 py-3 text-text-primary outline-none focus:border-primary"
+                          aria-label="Image URLs"
+                        />
+            <p className="mt-2 text-sm text-text-secondary">
               Add one or more image URLs separated by commas.
             </p>
           </div>
 
           <div className="flex gap-3 pt-2">
 
-            <button
+                      <Button
               type="button"
-              onClick={onClose}
-              className="flex-1 rounded-xl border border-gray-200 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
+                        variant="secondary"
+                        onClick={onClose}
+                        className="flex-1"
+                      >
+                        Cancel
+                      </Button>
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className="flex-1"
-            >
-              {loading
-                ? "Adding..."
-                : "Add Vehicle"}
+                      <Button
+                        type="submit"
+                        disabled={loading}
+                        loading={loading}
+                        className="flex-1"
+                      >
+                        Add Vehicle
             </Button>
 
           </div>
