@@ -153,23 +153,23 @@ const VehicleDetails = () => {
     vehicle.quantity === 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
 
         <button
           onClick={() => navigate(-1)}
-          className="mb-8 flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-600"
+                  className="mb-8 flex items-center gap-2 text-sm font-medium text-text-secondary hover:text-primary"
         >
           <ArrowLeft size={18} />
           Back
         </button>
 
-        <div className="grid overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm lg:grid-cols-2">
+        <div className="grid overflow-hidden rounded-3xl border border-border bg-surface shadow-sm lg:grid-cols-2">
 
           {/* Visual */}
 
-          <div className="flex min-h-[500px] items-center justify-center bg-gray-100">
+          <div className="flex min-h-[500px] items-center justify-center bg-surface/50">
             {vehicle.images && vehicle.images.length > 0 ? (
               <div className="relative w-full overflow-hidden rounded-3xl">
                 <img
@@ -191,57 +191,57 @@ const VehicleDetails = () => {
 
           <div className="p-8 sm:p-12">
 
-            <span className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600">
+            <span className="rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
               {vehicle.category}
             </span>
 
-            <p className="mt-8 text-lg font-semibold text-blue-600">
+            <p className="mt-8 text-lg font-semibold text-primary">
               {vehicle.make}
             </p>
 
-            <h1 className="mt-2 text-4xl font-bold text-gray-900">
+            <h1 className="mt-2 text-4xl font-bold text-text-primary">
               {vehicle.model}
             </h1>
 
-            <p className="mt-6 text-3xl font-bold text-gray-900">
+            <p className="mt-6 text-3xl font-bold text-text-primary">
               £{Number(vehicle.price).toLocaleString("en-GB")}
             </p>
 
-            <div className="my-8 h-px bg-gray-200" />
+            <div className="my-8 h-px bg-border" />
 
             <div className="grid gap-5 lg:grid-cols-3">
 
-              <div className="rounded-3xl bg-gray-50 p-6">
+                          <div className="rounded-3xl bg-surface p-6">
 
-                <p className="text-sm text-gray-500">
+                            <p className="text-sm text-text-secondary">
                   Category
                 </p>
 
-                <p className="mt-2 text-xl font-semibold text-gray-900">
+                            <p className="mt-2 text-xl font-semibold text-text-primary">
                   {vehicle.category}
                 </p>
 
               </div>
 
-              <div className="rounded-3xl bg-gray-50 p-6">
+                          <div className="rounded-3xl bg-surface p-6">
 
-                <p className="text-sm text-gray-500">
+                            <p className="text-sm text-text-secondary">
                   Available
                 </p>
 
-                <p className="mt-2 text-xl font-semibold text-gray-900">
+                            <p className="mt-2 text-xl font-semibold text-text-primary">
                   {vehicle.quantity}
                 </p>
 
               </div>
 
-              <div className="rounded-3xl bg-gray-50 p-6">
+                          <div className="rounded-3xl bg-surface p-6">
 
-                <p className="text-sm text-gray-500">
+                            <p className="text-sm text-text-secondary">
                   Images
                 </p>
 
-                <p className="mt-2 text-xl font-semibold text-gray-900">
+                            <p className="mt-2 text-xl font-semibold text-text-primary">
                   {vehicle.images?.length || 0}
                 </p>
 
@@ -253,17 +253,17 @@ const VehicleDetails = () => {
 
               {isOutOfStock ? (
                 <>
-                  <Package className="text-red-500" />
+                                <Package className="text-error" />
 
-                  <p className="font-medium text-red-600">
+                                <p className="font-medium text-error">
                     Currently out of stock
                   </p>
                 </>
               ) : (
                 <>
-                  <CheckCircle className="text-green-500" />
+                                <CheckCircle className="text-success" />
 
-                  <p className="font-medium text-green-600">
+                                <p className="font-medium text-success">
                     Available for purchase
                   </p>
                 </>
@@ -271,20 +271,14 @@ const VehicleDetails = () => {
 
             </div>
 
-            <button
-              onClick={handlePurchase}
-              disabled={
-                isOutOfStock ||
-                purchasing
-              }
-              className="mt-8 w-full rounded-xl bg-blue-600 px-6 py-4 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
-            >
-              {purchasing
-                ? "Processing..."
-                : isOutOfStock
-                  ? "Out of Stock"
-                  : "Purchase Vehicle"}
-            </button>
+            <Button
+                          onClick={handlePurchase}
+                          disabled={isOutOfStock || purchasing}
+                          loading={purchasing}
+                          className="mt-8 w-full"
+                        >
+                          {isOutOfStock ? "Out of Stock" : "Purchase Vehicle"}
+                        </Button>
 
             {purchaseMessage && (
               <div className="mt-4 rounded-xl bg-green-50 p-4 text-sm font-medium text-green-700">
