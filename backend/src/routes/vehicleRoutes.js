@@ -4,7 +4,10 @@ const {
     createVehicle,
     getVehicles,
     updateVehicle,
-    deleteVehicle
+    deleteVehicle,
+    searchVehicles,
+    purchaseVehicle,
+    restockVehicle
 } = require("../controllers/vehicleController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -24,6 +27,24 @@ router.get(
     getVehicles
 );
 
+router.get(
+    "/search",
+    protect,
+    searchVehicles
+);
+router.post(
+    "/:id/purchase",
+    protect,
+    purchaseVehicle
+);
+
+router.post(
+    "/:id/restock",
+    protect,
+    adminOnly,
+    restockVehicle
+);
+
 router.put(
     "/:id",
     protect,
@@ -36,5 +57,6 @@ router.delete(
     adminOnly,
     deleteVehicle
 );
+
 
 module.exports = router;

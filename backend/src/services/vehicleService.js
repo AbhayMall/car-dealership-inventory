@@ -74,6 +74,57 @@ const searchVehicles = async ({
 
     return await Vehicle.find(query);
 };
+const purchaseVehicle = async (id) => {
+
+    const vehicle = await Vehicle.findOneAndUpdate(
+        {
+            _id: id,
+            quantity: { $gt: 0 }
+        },
+        {
+            $inc: {
+                quantity: -1
+            }
+        },
+        {
+            new: true
+        }
+    );
+
+    if (!vehicle) {
+        throw new Error(
+            "Vehicle not available or out of stock"
+        );
+    }
+
+    return vehicle;
+};
+const restockVehicle = async (id, quantity) => {
+
+    if (!quantity || quantity <= 0) {
+        throw new Error(
+            "Restock quantity must be greater than zero"
+        );
+    }
+
+    const vehicle = await Vehicle.findByIdAndUpdate(
+        id,
+        {
+            $inc: {
+                quantity: quantity
+            }
+        },
+        {
+            new: true
+        }
+    );
+
+    if (!vehicle) {
+        throw new Error("Vehicle not found");
+    }
+
+    return vehicle;
+};
 
 module.exports = {
     createVehicle,
@@ -81,5 +132,7 @@ module.exports = {
     getVehicleById,
     updateVehicle,
     deleteVehicle,
-    searchVehicles
+    searchVehicles,
+    purchaseVehicle,
+    restockVehicle
 };

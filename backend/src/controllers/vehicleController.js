@@ -105,11 +105,58 @@ const searchVehicles = async (req, res) => {
 
     }
 };
+const purchaseVehicle = async (req, res) => {
+
+    try {
+
+        const vehicle =
+            await vehicleService.purchaseVehicle(
+                req.params.id
+            );
+
+        res.status(200).json({
+            message: "Vehicle purchased successfully",
+            vehicle
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+            message: error.message
+        });
+
+    }
+};
+const restockVehicle = async (req, res) => {
+
+    try {
+
+        const vehicle =
+            await vehicleService.restockVehicle(
+                req.params.id,
+                Number(req.body.quantity)
+            );
+
+        res.status(200).json({
+            message: "Vehicle restocked successfully",
+            vehicle
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+            message: error.message
+        });
+
+    }
+};
 
 module.exports = {
     createVehicle,
     getVehicles,
     updateVehicle,
     deleteVehicle,
-    searchVehicles
+    searchVehicles,
+    purchaseVehicle,
+    restockVehicle
 };
