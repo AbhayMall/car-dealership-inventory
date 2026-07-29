@@ -1,25 +1,47 @@
 import {
   Navigate,
+  Outlet,
+  useLocation,
 } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import {
+  useAuth,
+} from "../context/AuthContext";
 
-const AdminRoute = ({ children }) => {
+const AdminRoute = () => {
   const {
     user,
-    isAuthenticated,
+    loading,
   } = useAuth();
 
-  if (!isAuthenticated) {
+  const location = useLocation();
+
+  // Wait until authentication state is loaded
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-500">
+          Loading...
+        </p>
+      </div>
+    );
+  }
+
+  // Not logged in
+  if (!user) {
     return (
       <Navigate
         to="/login"
+        state={{
+          from: location,
+        }}
         replace
       />
     );
   }
 
-  if (user?.role !== "admin") {
+  // Logged in but not admin
+  if (user.role !== "admin") {
     return (
       <Navigate
         to="/dashboard"
@@ -28,7 +50,8 @@ const AdminRoute = ({ children }) => {
     );
   }
 
-  return children;
+  // Admin
+  return <Outlet />;
 };
 
 export default AdminRoute;

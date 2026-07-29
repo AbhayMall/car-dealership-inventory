@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -20,6 +21,12 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => {
     return localStorage.getItem("token") || null;
   });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const login = async (email, password) => {
     const response = await api.post(
@@ -61,6 +68,7 @@ export const AuthProvider = ({ children }) => {
     token,
     login,
     logout,
+    loading,
     isAuthenticated: Boolean(token),
   };
 

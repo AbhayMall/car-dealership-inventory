@@ -86,33 +86,23 @@ function App() {
             />
 
             {/* Admin Routes */}
-
             <Route
               path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
-
-            <Route
-              path="/admin/vehicles/new"
-              element={
-                <AdminRoute>
-                  <AddVehicle />
-                </AdminRoute>
-              }
-            />
-
-            <Route
-              path="/admin/vehicles/:id/edit"
-              element={
-                <AdminRoute>
-                  <EditVehicle />
-                </AdminRoute>
-              }
-            />
+              element={<AdminRoute />}
+            >
+              <Route
+                index
+                element={<AdminDashboard />}
+              />
+              <Route
+                path="vehicles/new"
+                element={<AddVehicle />}
+              />
+              <Route
+                path="vehicles/:id/edit"
+                element={<EditVehicle />}
+              />
+            </Route>
 
           </Routes>
         </main>
