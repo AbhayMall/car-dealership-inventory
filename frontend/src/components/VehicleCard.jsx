@@ -33,11 +33,19 @@ const VehicleCard = ({
 
         <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200" />
 
-        <Car
-          size={100}
-          strokeWidth={1}
-          className="relative text-gray-400 transition duration-300 group-hover:scale-110"
-        />
+        {vehicle.images && vehicle.images.length > 0 ? (
+          <img
+            src={vehicle.images[0]}
+            alt={`${vehicle.make} ${vehicle.model}`}
+            className="relative h-full w-full object-cover"
+          />
+        ) : (
+          <Car
+            size={100}
+            strokeWidth={1}
+            className="relative text-gray-400 transition duration-300 group-hover:scale-110"
+          />
+        )}
 
         {/* Category */}
 

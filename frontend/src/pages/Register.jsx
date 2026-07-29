@@ -15,10 +15,12 @@ import {
 import Input from "../components/Input";
 import Button from "../components/Button";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,7 +61,14 @@ const Register = () => {
         formData
       );
 
-      navigate("/login");
+      // auto-login and go to dashboard
+      try {
+        await login(formData.email, formData.password);
+        navigate("/dashboard", { replace: true });
+      } catch (err) {
+        // fallback to login page
+        navigate("/login");
+      }
 
     } catch (error) {
 

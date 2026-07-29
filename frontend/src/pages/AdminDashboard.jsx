@@ -14,31 +14,142 @@ import {
 
 import api from "../services/api";
 
-import VehicleCard from "../components/VehicleCard";
+import AdminVehicleTable
+  from "../components/AdminVehicleTable";
+import AdminPurchasesTable from "../components/AdminPurchasesTable";
 
 import AddVehicleModal
   from "../components/AddVehicleModal";
+
+import ConfirmModal
+  from "../components/ConfirmModal";
+
+import EditVehicleModal
+  from "../components/EditVehicleModal";
+
+import RestockModal
+  from "../components/RestockModal";
+
+import { useToast } from "../context/ToastContext.jsx";
 
 const AdminDashboard = () => {
 
   const [showAddModal, setShowAddModal] =
     useState(false);
 
+  const [editingVehicle, setEditingVehicle] =
+    useState(null);
+
+  const [restockingVehicle, setRestockingVehicle] =
+    useState(null);
+
+  const [confirmDeleteVehicle, setConfirmDeleteVehicle] =
+    useState(null);
+
+  const [actionLoading, setActionLoading] =
+    useState(false);
+
+  const { addToast } = useToast();
+
+  const handleEdit = (vehicle) => {
+    setEditingVehicle(vehicle);
+  };
+
+  const handleRestock = (vehicle) => {
+    setRestockingVehicle(vehicle);
+  };
+
+  const handleVehicleUpdated = async (
+    vehicleId,
+    vehicleData
+  ) => {
+
+    try {
+      setActionLoading(true);
+
+      await api.put(
+        `/vehicles/${vehicleId}`,
+        vehicleData
+      );
+
+      await fetchVehicles();
+      addToast("Vehicle updated successfully.");
+    } catch (error) {
+      addToast(
+        error.response?.data?.message ||
+          "Unable to update vehicle.",
+        "error"
+      );
+      throw error;
+    } finally {
+      setActionLoading(false);
+    }
+
+  };
+
+  const handleVehicleRestocked = async (
+    vehicleId,
+    quantity
+  ) => {
+
+    try {
+      setActionLoading(true);
+
+      await api.post(
+        `/vehicles/${vehicleId}/restock`,
+        {
+          quantity,
+        }
+      );
+
+      await fetchVehicles();
+      addToast("Vehicle restocked successfully.");
+    } catch (error) {
+      addToast(
+        error.response?.data?.message ||
+          "Unable to restock vehicle.",
+        "error"
+      );
+      throw error;
+    } finally {
+      setActionLoading(false);
+    }
+
+  };
+
   const handleAddVehicle = async (
     vehicleData
   ) => {
 
-    await api.post(
-      "/vehicles",
-      vehicleData
-    );
+    try {
+      setActionLoading(true);
 
-    await fetchVehicles();
+      await api.post(
+        "/vehicles",
+        vehicleData
+      );
+
+      await fetchVehicles();
+      addToast("Vehicle added successfully.");
+    } catch (error) {
+      addToast(
+        error.response?.data?.message ||
+          "Unable to add vehicle.",
+        "error"
+      );
+      throw error;
+    } finally {
+      setActionLoading(false);
+    }
 
   };
 
   const [vehicles, setVehicles] =
     useState([]);
+
+  const [purchases, setPurchases] = useState([]);
+  const [loadingPurchases, setLoadingPurchases] = useState(false);
+  const [confirmingPurchase, setConfirmingPurchase] = useState(false);
 
   const [loading, setLoading] =
     useState(true);
@@ -79,8 +190,52 @@ const AdminDashboard = () => {
   useEffect(() => {
 
     fetchVehicles();
+    fetchPurchases();
 
   }, []);
+
+  const fetchPurchases = async () => {
+    try {
+      setLoadingPurchases(true);
+      const res = await api.get('/purchases');
+      setPurchases(res.data);
+    } catch (err) {
+      console.error(err);
+      addToast(err.response?.data?.message || 'Unable to load purchases', 'error');
+    } finally {
+      setLoadingPurchases(false);
+    }
+  };
+
+  const handleDownloadReceipt = async (id) => {
+    try {
+      const res = await api.get(`/purchases/${id}/receipt`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `receipt-${id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (err) {
+      console.error(err);
+      addToast(err.response?.data?.message || 'Unable to download receipt', 'error');
+    }
+  };
+
+  const handleConfirmPurchase = async (id) => {
+    try {
+      setConfirmingPurchase(true);
+      await api.put(`/purchases/${id}/confirm`);
+      addToast('Payment confirmed.');
+      await fetchPurchases();
+    } catch (err) {
+      console.error(err);
+      addToast(err.response?.data?.message || 'Unable to confirm payment', 'error');
+    } finally {
+      setConfirmingPurchase(false);
+    }
+  };
 
   const totalVehicles =
     vehicles.length;
@@ -97,6 +252,38 @@ const AdminDashboard = () => {
       (vehicle) =>
         vehicle.quantity === 0
     ).length;
+
+  const handleDelete = async (vehicle) => {
+    setConfirmDeleteVehicle(vehicle);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!confirmDeleteVehicle) return;
+
+    try {
+      setActionLoading(true);
+
+      await api.delete(
+        `/vehicles/${confirmDeleteVehicle._id}`
+      );
+
+      await fetchVehicles();
+      addToast("Vehicle deleted successfully.");
+    } catch (error) {
+      addToast(
+        error.response?.data?.message ||
+          "Unable to delete vehicle.",
+        "error"
+      );
+    } finally {
+      setActionLoading(false);
+      setConfirmDeleteVehicle(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmDeleteVehicle(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -261,22 +448,34 @@ const AdminDashboard = () => {
           {!loading &&
             vehicles.length > 0 && (
 
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                {vehicles.map(
-                  (vehicle) => (
-
-                    <VehicleCard
-                      key={vehicle._id}
-                      vehicle={vehicle}
-                    />
-
-                  )
-                )}
-
+              <div className="mt-6">
+                <AdminVehicleTable
+                  vehicles={vehicles}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onRestock={handleRestock}
+                />
               </div>
 
             )}
+
+            {/* Purchases */}
+
+            <div className="mt-10 rounded-2xl border border-gray-200 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Recent Purchases</h2>
+                  <p className="mt-1 text-sm text-gray-500">View and confirm purchase payments.</p>
+                </div>
+                <div>
+                  <button onClick={fetchPurchases} className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold">Refresh</button>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <AdminPurchasesTable purchases={purchases} onDownload={handleDownloadReceipt} onConfirm={handleConfirmPurchase} loadingConfirm={confirmingPurchase} />
+              </div>
+            </div>
 
         </div>
 
@@ -291,6 +490,46 @@ const AdminDashboard = () => {
             handleAddVehicle
           }
         />
+      )}
+
+      {editingVehicle && (
+
+        <EditVehicleModal
+          vehicle={editingVehicle}
+          onClose={() =>
+            setEditingVehicle(null)
+          }
+          onVehicleUpdated={
+            handleVehicleUpdated
+          }
+        />
+
+      )}
+
+      {restockingVehicle && (
+
+        <RestockModal
+          vehicle={restockingVehicle}
+          onClose={() =>
+            setRestockingVehicle(null)
+          }
+          onRestocked={
+            handleVehicleRestocked
+          }
+        />
+
+      )}
+
+      {confirmDeleteVehicle && (
+
+        <ConfirmModal
+          title="Delete vehicle"
+          message={`Are you sure you want to delete ${confirmDeleteVehicle.make} ${confirmDeleteVehicle.model}?`}
+          confirmLabel={actionLoading ? "Deleting..." : "Delete"}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+
       )}
 
     </div>

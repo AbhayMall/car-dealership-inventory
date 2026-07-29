@@ -20,6 +20,7 @@ const AddVehicleModal = ({
     category: "",
     price: "",
     quantity: "",
+    imageUrls: "",
   });
 
   const [loading, setLoading] =
@@ -56,6 +57,10 @@ const AddVehicleModal = ({
         ...formData,
         price: Number(formData.price),
         quantity: Number(formData.quantity),
+        images: formData.imageUrls
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
       });
 
       onClose();
@@ -169,6 +174,22 @@ const AddVehicleModal = ({
               required
             />
 
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Image URLs
+            </label>
+            <textarea
+              name="imageUrls"
+              value={formData.imageUrls}
+              onChange={handleChange}
+              placeholder="Enter image URLs separated by commas"
+              className="min-h-[120px] w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none focus:border-blue-500"
+            />
+            <p className="mt-2 text-sm text-gray-500">
+              Add one or more image URLs separated by commas.
+            </p>
           </div>
 
           <div className="flex gap-3 pt-2">

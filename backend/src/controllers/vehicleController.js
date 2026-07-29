@@ -36,6 +36,26 @@ const getVehicles = async (req, res) => {
     }
 };
 
+const getVehicleById = async (req, res) => {
+    try {
+        const vehicle = await vehicleService.getVehicleById(
+            req.params.id
+        );
+
+        if (!vehicle) {
+            return res.status(404).json({
+                message: "Vehicle not found"
+            });
+        }
+
+        res.status(200).json(vehicle);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 const updateVehicle = async (req, res) => {
 
     try {
@@ -109,15 +129,9 @@ const purchaseVehicle = async (req, res) => {
 
     try {
 
-        const vehicle =
-            await vehicleService.purchaseVehicle(
-                req.params.id
-            );
-
-        res.status(200).json({
-            message: "Vehicle purchased successfully",
-            vehicle
-        });
+        // delegate to purchase service which validates age and records buyer info
+        const purchaseController = require("../controllers/purchaseController");
+        return purchaseController.createPurchase(req, res);
 
     } catch (error) {
 
@@ -126,6 +140,7 @@ const purchaseVehicle = async (req, res) => {
         });
 
     }
+
 };
 const restockVehicle = async (req, res) => {
 
@@ -154,6 +169,7 @@ const restockVehicle = async (req, res) => {
 module.exports = {
     createVehicle,
     getVehicles,
+    getVehicleById,
     updateVehicle,
     deleteVehicle,
     searchVehicles,

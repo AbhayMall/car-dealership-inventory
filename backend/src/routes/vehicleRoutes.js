@@ -3,6 +3,7 @@ const express = require("express");
 const {
     createVehicle,
     getVehicles,
+    getVehicleById,
     updateVehicle,
     deleteVehicle,
     searchVehicles,
@@ -32,6 +33,13 @@ router.get(
     protect,
     searchVehicles
 );
+
+router.get(
+    "/:id",
+    protect,
+    getVehicleById
+);
+
 router.post(
     "/:id/purchase",
     protect,

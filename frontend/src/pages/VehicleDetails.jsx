@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 
 import api from "../services/api";
+import PurchaseModal from "../components/PurchaseModal";
+import Button from "../components/Button";
 
 const VehicleDetails = () => {
 
@@ -34,34 +36,47 @@ const VehicleDetails = () => {
   const [error, setError] =
     useState("");
 
-  const [purchasing, setPurchasing] =
-    useState(false);
+  const [purchasing, setPurchasing] = useState(false);
+  const [purchaseMessage, setPurchaseMessage] = useState("");
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
-  const [purchaseMessage, setPurchaseMessage] =
-    useState("");
+  const handlePurchase = () => {
+    setShowPurchaseModal(true);
+  };
 
-  const handlePurchase = async () => {
+  const handlePurchaseSubmit = async (buyerInfo) => {
+    setPurchasing(true);
+    setPurchaseMessage("");
+
     try {
-      setPurchasing(true);
-      setPurchaseMessage("");
-
       const response = await api.post(
-        `/vehicles/${id}/purchase`
+        `/vehicles/${id}/purchase`,
+        buyerInfo
       );
 
-      setVehicle(
-        response.data.vehicle ||
-        response.data
-      );
+      const purchase = response.data.purchase;
 
-      setPurchaseMessage(
-        "Vehicle purchased successfully!"
-      );
+      // refresh vehicle info
+      const vehicleResp = await api.get(`/vehicles/${id}`);
+      setVehicle(vehicleResp.data.vehicle || vehicleResp.data);
+
+      // download receipt
+      if (purchase && purchase._id) {
+        const receiptResp = await api.get(`/purchases/${purchase._id}/receipt`, { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([receiptResp.data], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `receipt-${purchase._id}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      }
+
+      setPurchaseMessage("Purchase created successfully.");
+
     } catch (error) {
-      setPurchaseMessage(
-        error.response?.data?.message ||
-        "Purchase failed."
-      );
+      setPurchaseMessage(error.response?.data?.message || "Purchase failed.");
+      throw error;
     } finally {
       setPurchasing(false);
     }
@@ -155,13 +170,21 @@ const VehicleDetails = () => {
           {/* Visual */}
 
           <div className="flex min-h-[500px] items-center justify-center bg-gray-100">
-
-            <Car
-              size={220}
-              strokeWidth={1}
-              className="text-gray-400"
-            />
-
+            {vehicle.images && vehicle.images.length > 0 ? (
+              <div className="relative w-full overflow-hidden rounded-3xl">
+                <img
+                  src={vehicle.images[0]}
+                  alt={`${vehicle.make} ${vehicle.model}`}
+                  className="h-[500px] w-full object-cover"
+                />
+              </div>
+            ) : (
+              <Car
+                size={220}
+                strokeWidth={1}
+                className="text-gray-400"
+              />
+            )}
           </div>
 
           {/* Details */}
@@ -186,28 +209,40 @@ const VehicleDetails = () => {
 
             <div className="my-8 h-px bg-gray-200" />
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid gap-5 lg:grid-cols-3">
 
-              <div className="rounded-xl bg-gray-50 p-4">
+              <div className="rounded-3xl bg-gray-50 p-6">
 
                 <p className="text-sm text-gray-500">
                   Category
                 </p>
 
-                <p className="mt-1 font-semibold">
+                <p className="mt-2 text-xl font-semibold text-gray-900">
                   {vehicle.category}
                 </p>
 
               </div>
 
-              <div className="rounded-xl bg-gray-50 p-4">
+              <div className="rounded-3xl bg-gray-50 p-6">
 
                 <p className="text-sm text-gray-500">
                   Available
                 </p>
 
-                <p className="mt-1 font-semibold">
+                <p className="mt-2 text-xl font-semibold text-gray-900">
                   {vehicle.quantity}
+                </p>
+
+              </div>
+
+              <div className="rounded-3xl bg-gray-50 p-6">
+
+                <p className="text-sm text-gray-500">
+                  Images
+                </p>
+
+                <p className="mt-2 text-xl font-semibold text-gray-900">
+                  {vehicle.images?.length || 0}
                 </p>
 
               </div>
@@ -255,6 +290,14 @@ const VehicleDetails = () => {
               <div className="mt-4 rounded-xl bg-green-50 p-4 text-sm font-medium text-green-700">
                 {purchaseMessage}
               </div>
+            )}
+
+            {showPurchaseModal && (
+              <PurchaseModal
+                vehicle={vehicle}
+                onClose={() => setShowPurchaseModal(false)}
+                onPurchased={handlePurchaseSubmit}
+              />
             )}
 
           </div>

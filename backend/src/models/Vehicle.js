@@ -31,6 +31,12 @@ const vehicleSchema = new mongoose.Schema(
             required: true,
             min: 0,
             default: 0
+        },
+
+        images: {
+            type: [String],
+            default: [],
+            trim: true
         }
     },
     {

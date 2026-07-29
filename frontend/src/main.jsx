@@ -13,6 +13,9 @@ import App from "./App.jsx";
 import {
   AuthProvider,
 } from "./context/AuthContext.jsx";
+import {
+  ToastProvider,
+} from "./context/ToastContext.jsx";
 
 createRoot(
   document.getElementById("root")
@@ -22,7 +25,11 @@ createRoot(
 
     <AuthProvider>
 
-      <App />
+      <ToastProvider>
+
+        <App />
+
+      </ToastProvider>
 
     </AuthProvider>
 

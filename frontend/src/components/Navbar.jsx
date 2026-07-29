@@ -35,7 +35,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
     setIsMenuOpen(false);
   };
 
@@ -111,6 +111,15 @@ const Navbar = () => {
                 <LayoutDashboard size={17} />
                 Dashboard
               </span>
+            </NavLink>
+          )}
+
+          {isAuthenticated && (
+            <NavLink
+              to="/profile"
+              className={navLinkClass}
+            >
+              Profile
             </NavLink>
           )}
 

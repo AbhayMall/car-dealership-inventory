@@ -97,6 +97,33 @@ describe("Vehicle API", () => {
     expect(Array.isArray(response.body)).toBe(true);
 });
 
+    it("should get a vehicle by id for authenticated user", async () => {
+        const token = await createTestUser();
+
+        const createResponse = await request(app)
+            .post("/api/vehicles")
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                make: "Toyota",
+                model: "Corolla",
+                category: "Sedan",
+                price: 22000,
+                quantity: 3
+            });
+
+        expect(createResponse.statusCode).toBe(201);
+
+        const vehicleId = createResponse.body._id;
+
+        const response = await request(app)
+            .get(`/api/vehicles/${vehicleId}`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body._id).toBe(vehicleId);
+        expect(response.body.make).toBe("Toyota");
+    });
+
     it("should purchase a vehicle and decrement quantity", async () => {
         const token = await registerAndLoginUser({
             name: "Purchase User",

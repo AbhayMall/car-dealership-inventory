@@ -12,8 +12,11 @@ import Inventory from "./pages/Inventory";
 import Search from "./pages/Search";
 import VehicleDetails from "./pages/VehicleDetails";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminPurchaseDetail from "./pages/AdminPurchaseDetail";
 import AddVehicle from "./pages/AddVehicle";
 import EditVehicle from "./pages/EditVehicle";
+import MyPurchases from "./pages/MyPurchases";
+import Profile from "./pages/Profile";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -85,6 +88,24 @@ function App() {
               }
             />
 
+            <Route
+              path="/purchases"
+              element={
+                <ProtectedRoute>
+                  <MyPurchases />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Admin Routes */}
             <Route
               path="/admin"
@@ -94,6 +115,7 @@ function App() {
                 index
                 element={<AdminDashboard />}
               />
+              <Route path="purchases/:id" element={<AdminPurchaseDetail />} />
               <Route
                 path="vehicles/new"
                 element={<AddVehicle />}
