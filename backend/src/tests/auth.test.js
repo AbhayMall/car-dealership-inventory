@@ -67,5 +67,17 @@ it("should reject registration when name is missing", async () => {
     expect(response.statusCode).toBe(400);
 
 });
+it("should reject registration when email is missing", async () => {
+
+    const response = await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Abhay",
+            password: "password123"
+        });
+
+    expect(response.statusCode).toBe(400);
+
+});
 
 });
