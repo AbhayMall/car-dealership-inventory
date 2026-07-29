@@ -139,4 +139,36 @@ it("should login an existing user", async () => {
     expect(response.body).toHaveProperty("token");
 
 });
+it("should reject invalid password", async () => {
+
+    await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Invalid Login",
+            email: "invalidlogin@example.com",
+            password: "password123"
+        });
+
+    const response = await request(app)
+        .post("/api/auth/login")
+        .send({
+            email: "invalidlogin@example.com",
+            password: "wrongpassword"
+        });
+
+    expect(response.statusCode).toBe(401);
+
+});
+it("should reject non-existing user", async () => {
+
+    const response = await request(app)
+        .post("/api/auth/login")
+        .send({
+            email: "notfound@example.com",
+            password: "password123"
+        });
+
+    expect(response.statusCode).toBe(401);
+
+});
 });
