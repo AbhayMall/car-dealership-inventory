@@ -104,4 +104,17 @@ it("should reject password shorter than 8 characters", async () => {
     expect(response.statusCode).toBe(400);
 
 });
+it("should reject invalid email format", async () => {
+
+    const response = await request(app)
+        .post("/api/auth/register")
+        .send({
+            name: "Abhay",
+            email: "invalid-email",
+            password: "password123"
+        });
+
+    expect(response.statusCode).toBe(400);
+
+});
 });
