@@ -24,17 +24,17 @@ const createPurchase = async (user, vehicleId, buyerInfo) => {
   }
 
   const purchase = await Purchase.create({
-    vehicle: vehicleId,
-    user: user?._id,
-    buyerName: buyerName || (user && user.name) || "",
-    phone,
-    aadhar,
-    location,
-    age: Number(age),
-    drivingLicense,
-    paymentMethod,
-    paymentConfirmed: paymentMethod !== "cash",
-  });
+  vehicle: vehicleId,
+  user: user.userId,
+  buyerName: buyerName || (user && user.name) || "",
+  phone,
+  aadhar,
+  location,
+  age: Number(age),
+  drivingLicense,
+  paymentMethod,
+  paymentConfirmed: paymentMethod !== "cash",
+});
 
   return { vehicle, purchase };
 };

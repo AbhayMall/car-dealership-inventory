@@ -26,7 +26,8 @@ const createPurchase = async (req, res) => {
 
 const getUserPurchases = async (req, res) => {
   try {
-    const purchases = await purchaseService.getPurchasesForUser(req.user._id);
+    
+    const purchases = await purchaseService.getPurchasesForUser(req.user.userId);
     res.status(200).json(purchases);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -51,9 +52,18 @@ const getReceipt = async (req, res) => {
     }
 
     // allow owner or admin
-    if (!req.user || (purchase.user && purchase.user._id.toString() !== req.user._id.toString() && req.user.role !== "admin")) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
+    
+
+if (
+  !req.user ||
+  (
+    purchase.user &&
+    purchase.user._id.toString() !== req.user.userId &&
+    req.user.role !== "admin"
+  )
+) {
+  return res.status(403).json({ message: "Unauthorized" });
+}
 
     // require pdfkit lazily so server can start when dependency missing
     let PDFDocument;
